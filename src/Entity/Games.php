@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MatchRepository;
+use App\Repository\GamesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MatchRepository::class)
- * @ORM\Table(name="`match`")
+ * @ORM\Entity(repositoryClass=GamesRepository::class)
  */
-class Match
+class Games
 {
     /**
      * @ORM\Id()
