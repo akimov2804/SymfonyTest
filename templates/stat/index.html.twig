@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-<link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
-{% block title %}Predictor{% endblock %}
+
+{% block title %}Statistics{% endblock %}
 {% block header %}
     <link href="//db.onlinewebfonts.com/c/b20e00c5828d894b65488a11690a6187?family=Premier+League" rel="stylesheet" type="text/css"/>
     <style>
@@ -15,18 +15,19 @@
             color: white;
         }
     </style>
+    <link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="epl">
-        <a class="navbar-brand" href="#">English Premier League</a>
+        <a class="navbar-brand" href="/">English Premier League</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Stat</a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/stat">Stat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Fixtures</a>
@@ -43,7 +44,38 @@
     </nav>
 {% endblock %}
 {% block body %}
-
-
-
+    <style>
+        .table{
+            margin-top: 3.5%;
+            text-align: center;
+            font-family: 'Premier League', sans-serif;
+            font-size: 25px;
+        }
+    </style>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" width="1%">#</th>
+            <th scope="col" width="1%"></th>
+            <th scope="col"width="65%">Team</th>
+            <th scope="col">%HomeWins</th>
+            <th scope="col">%Draws</th>
+            <th scope="col">%AwayWins</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set count = 0 %}
+        {% for i in Statistics %}
+        {% set count = count + 1 %}
+        <tr>
+            <th scope="row">{{ count }}</th>
+            <td><img src="{{ i.1 }}" height="40px" /></td>
+            <td>{{ i.0 }}</td>
+            <td>{{ i.2 }}</td>
+            <td>{{ i.4 }}</td>
+            <td>{{ i.3 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
