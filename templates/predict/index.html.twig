@@ -15,6 +15,7 @@
             color: white;
         }
     </style>
+    <link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="epl">
         <a class="navbar-brand" href="/">English Premier League</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,38 +44,45 @@
     </nav>
 {% endblock %}
 {% block body %}
-    {% block welcome %}
-        <section class="jumbotron text-center" id="back">
-            <div class="container">
-                <h1 id="title">Choose team</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            </div>
-        </section>
-    {% endblock %}
-    {% block switcher %}
-        <style>
-            .row{
-                padding-left: 5%;
-                padding-right: 5%;
-                font-family: 'Premier League', sans-serif;
-                text-align: center;
-            }
-            .round{
-                object-fit: contain;
-            }
-        </style>
-        <div class="row">
-            {% for i in Teams %}
-                <div class="col-lg-3">
-{#                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>#}
-                    <a href="predict?id={{ i.3 }}"><img src="{{ i.2 }}" class="round" alt="" width="140" height="140">
-                    <h4>{{ i.1 }}</h4></a>
-{#                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>#}
-                </div>
-            {% endfor %}
-        </div>
-    {% endblock %}
-    <link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
-
+    <style>
+        .table
+        {
+            font-family: 'Premier League', sans-serif;
+            font-size: 20px;
+            text-align: center;
+            vertical-align: center;
+        }
+        .btn-success, .btn-danger{
+            width: 200px;
+        }
+    </style>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" width="1%">#</th>
+            <th scope="col" width="1%">#</th>
+            <th scope="col" width="75%">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set count = 0 %}
+        {% for i in Teams %}
+            {% if i.0 != SelectedID %}
+                {% set count = count + 1 %}
+            <tr>
+                <th scope="row">{{ count }}</th>
+                <td><img src="{{ i.2 }}" height="40px"></td>
+                <td> {{ i.1 }}</td>
+                <td ><a href="predict?id={{ i.3 }}&home={{ 1 }}&FirstTeam={{ HomePredict }}&FirstTeamID={{ SelectedID }}" class="btn btn-success" role="button">Home</a></td>
+                <td ><a href="predict?id={{ i.3 }}&home={{ 0 }}&FirstTeam={{ AwayPredict }}&FirstTeamID={{ SelectedID }}" class="btn btn-danger" role="button">Away</a></td>
+            </tr>
+            {% else %}
+                <p></p>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

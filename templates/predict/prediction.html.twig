@@ -15,6 +15,7 @@
             color: white;
         }
     </style>
+    <link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="epl">
         <a class="navbar-brand" href="/">English Premier League</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,38 +44,61 @@
     </nav>
 {% endblock %}
 {% block body %}
-    {% block welcome %}
-        <section class="jumbotron text-center" id="back">
-            <div class="container">
-                <h1 id="title">Choose team</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            </div>
-        </section>
-    {% endblock %}
-    {% block switcher %}
-        <style>
-            .row{
-                padding-left: 5%;
-                padding-right: 5%;
-                font-family: 'Premier League', sans-serif;
-                text-align: center;
-            }
-            .round{
-                object-fit: contain;
-            }
-        </style>
-        <div class="row">
-            {% for i in Teams %}
-                <div class="col-lg-3">
-{#                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>#}
-                    <a href="predict?id={{ i.3 }}"><img src="{{ i.2 }}" class="round" alt="" width="140" height="140">
-                    <h4>{{ i.1 }}</h4></a>
-{#                    <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>#}
-                </div>
-            {% endfor %}
-        </div>
-    {% endblock %}
-    <link href="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <style>
+        tr{
+            text-align: center;
+            font-family: 'Premier League', sans-serif;
+            background-color: #340038;
+            color: #FFFFFF;
+            font-size: 40px;
+        }
+        tbody{
+            background-color: #340038;
+        }
+        img{
+            height: 350px;
+        }
+        .table-light{
+            width: 100%;
+            background-color: #340038;
+        }
+        *{
+            background-color: #340038;
+        }
+    </style>
+    <table class="table-light">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><img src="{{ FirstTeamLogo }}" alt=""></td>
+        <td><img src="{{ SecondTeamLogo }}" alt=""></td>
+    </tr>
+    <tr>
+        <td>{{ FirstTeamName }}</td>
+        <td>{{ SecondTeamName }}</td>
+    </tr>
+    <tr>
+        <td>{{ FirstTeamScore }}</td>
+        <td>{{ SecondTeamScore }}</td>
+    </tr>
+    <tr>
+        {% if  FirstTeamScore  >  SecondTeamScore  %}
+        <td colspan="2">{{ FirstTeamName }} - {{ ( FirstTeamScore - SecondTeamScore ) / SecondTeamScore }}%</td>
+        {% elseif ( FirstTeamScore - SecondTeamScore ) / SecondTeamScore > 100 %}
+            <td colspan="2">{{ FirstTeamName }} - 99%</td>
+        {% elseif ( SecondTeamScore - FirstTeamScore ) / FirstTeamScore > 100 %}
+            <td colspan="2">{{ SecondTeamName }} - 99%</td>
+        {% else %}
+            <td colspan="2">{{ SecondTeamName }} - {{ ( SecondTeamScore - FirstTeamScore ) / FirstTeamScore }}%</td>
+        {% endif %}
+    </tr>
+    </tbody>
 
+    </table>
 
 {% endblock %}
